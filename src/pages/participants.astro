@@ -11,8 +11,12 @@ const registrations = (await sql`select *
                                  order by date desc`) as Registration[]
 
 const total = registrations.reduce(
-  (acc, current) => acc.map((x, index) => x + (current.days[index] ? 1 : 0)),
-  Array(days.length).fill(0) as number[],
+  (acc, current) =>
+    acc.map((x, index) => ({
+      all: x.all + (current.days[index] ? 1 : 0),
+      desktop: x.desktop + (current.hardware.pc && current.days[index] ? 1 : 0),
+    })),
+  Array(days.length).fill({ all: 0, desktop: 0 }) as { all: 0; desktop: 0 }[],
 )
 
 const max = Math.max(...total)
@@ -50,8 +54,8 @@ const params = Astro.url.searchParams
                 <tr>
                   <th colspan="2">👥</th>
                   {total.map(count => (
-                    <td style={{ opacity: count / max }} class="count">
-                      {count}
+                    <td style={{ opacity: count.all / max }} class="count">
+                      {count.all} <span class="desktop">({count.desktop})</span>
                     </td>
                   ))}
                 </tr>
@@ -124,6 +128,10 @@ const params = Astro.url.searchParams
   td.yes,
   td.count {
     background-color: rgba(100, 149, 237, 0.52);
+  }
+
+  .desktop {
+    opacity: 0.5;
   }
 
   .spacer {
