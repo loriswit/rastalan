@@ -1,0 +1,37 @@
+---
+import Video from "@/assets/medias/alien.mp4"
+---
+
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    <title>Conditions de participation - RastaLAN</title>
+  </head>
+  <body>
+    <video autoplay loop>
+      <source src={Video} type="video/mp4" />
+    </video>
+    <script>
+      const formData = localStorage.getItem("form")
+      if (formData) {
+        const fields = JSON.parse(formData)
+        fields.conditionsRead = true
+        localStorage.setItem("form", JSON.stringify(fields))
+      }
+    </script>
+  </body>
+</html>
+
+<style>
+  video {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    height: 100%;
+    transform: translateX(calc(-50% + 50vw));
+  }
+</style>

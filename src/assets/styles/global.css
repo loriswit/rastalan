@@ -1,0 +1,111 @@
+@font-face {
+  font-family: TwCenMT;
+  src: url("@/assets/fonts/tw-cen-mt.ttf");
+}
+
+* {
+  box-sizing: border-box;
+  font-family: TwCenMT, sans-serif;
+}
+
+a {
+  color: lightskyblue;
+  text-decoration: underline;
+
+  &:hover {
+    color: orange;
+  }
+}
+
+a.button {
+  color: white;
+  text-decoration: none;
+}
+
+button:focus-visible,
+a.button:focus-visible {
+  outline: 2px solid white;
+}
+
+button,
+a.button {
+  background-color: #d164ad;
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 2em auto;
+}
+
+button:not(:disabled) {
+  cursor: pointer;
+}
+
+button:hover:not(:disabled),
+a.button:hover:not(:disabled) {
+  filter: saturate(120%) brightness(120%);
+  box-shadow: 0 0 1em #fcd47490;
+}
+
+button:disabled,
+a.button:disabled {
+  filter: saturate(80%) brightness(80%);
+  cursor: not-allowed;
+}
+
+input:not([type="checkbox"]),
+button,
+a.button {
+  width: 100%;
+  height: 50px;
+  margin: 0;
+}
+
+input[type="checkbox"] {
+  margin-right: 1em;
+  transform: scale(1.5);
+}
+
+input:not([type="checkbox"]),
+button,
+a.button,
+textarea,
+.field {
+  box-shadow: 0 0 1em #fcd47440;
+  padding: 15px;
+  border: none;
+  transform: skew(-10deg);
+  font-size: 0.9em;
+  color: white;
+}
+
+input,
+textarea,
+.field {
+  background-color: #402f4b80;
+}
+
+.field {
+  display: flex;
+  align-items: center;
+}
+
+.field .name {
+  flex-grow: 1;
+}
+
+.field:hover {
+  cursor: pointer;
+  background-color: #402f4be0;
+}
+
+.field:has(input:checked) {
+  cursor: pointer;
+  background-color: #64e2d980;
+}
+
+input:focus-visible,
+textarea:focus-visible {
+  background-color: #402f4be0;
+  outline: 2px solid #59cbff;
+}

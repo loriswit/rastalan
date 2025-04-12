@@ -1,0 +1,153 @@
+---
+import "@/assets/styles/global.css"
+import { endDate, startDate } from "@/util/dates"
+import { currentEvent } from "@/util/db"
+
+const { title } = Astro.props
+
+const host = Astro.request.headers.get("host")
+const previousPage = Astro.request.headers.get("referer")
+const enableAnimations = !previousPage || new URL(previousPage).host !== host
+
+const startDateStr = startDate.toLocaleDateString("fr-CH", {
+  day: "numeric",
+  month: startDate.getMonth() !== endDate.getMonth() ? "long" : undefined,
+  year: startDate.getFullYear() !== endDate.getFullYear() ? "numeric" : undefined,
+})
+const endDateStr = endDate.toLocaleDateString("fr-CH", {
+  day: "numeric",
+  month: "long",
+  year: "numeric",
+})
+---
+
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title && title + " - "}{currentEvent.name}</title>
+  </head>
+  <body class={enableAnimations ? "animated" : undefined}>
+    <header>
+      <h1><span class="title">{currentEvent.name}</span></h1>
+      <p class="date">{startDateStr} &ndash; {endDateStr}</p>
+    </header>
+    <main>
+      <slot />
+    </main>
+  </body>
+</html>
+
+<style>
+  html,
+  body {
+    margin: 0;
+    height: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+
+  body {
+    background-image: url("@/assets/images/background.webp");
+    background-attachment: fixed;
+    background-size: cover;
+    background-position: center;
+
+    color: white;
+  }
+
+  h1 {
+    font-size: min(8rem, 18vw);
+    font-weight: normal;
+    margin-bottom: 0;
+  }
+
+  .title {
+    display: inline-block;
+  }
+
+  .date {
+    font-size: min(3rem, 7vw);
+    margin-top: 0;
+  }
+
+  .title,
+  .date {
+    letter-spacing: -0.04em;
+  }
+
+  .animated :is(.title, .date) {
+    animation:
+      title-in 1.5s cubic-bezier(0.52, 0, 0.03, 1.08),
+      fade-in 1s ease-out;
+  }
+
+  h1,
+  .date {
+    font-style: italic;
+    text-transform: uppercase;
+    text-align: center;
+    text-shadow: 0 0 1em #fcd474b0;
+  }
+
+  main {
+    font-size: 1.4em;
+    padding: 1.5rem;
+  }
+
+  .animated main {
+    animation: 1.5s slide-in both cubic-bezier(0.53, -0.21, 0.03, 1.08);
+    animation-delay: 0.2s;
+  }
+
+  @media (max-width: 1000px) {
+    .animated :is(.title, .date) {
+      animation-name: title-in-mobile, fade-in;
+    }
+  }
+
+  @keyframes title-in {
+    from {
+      letter-spacing: 0.4ch;
+    }
+
+    to {
+      letter-spacing: -0.04em;
+    }
+  }
+
+  @keyframes title-in-mobile {
+    from {
+      transform: scale(1.3);
+    }
+
+    to {
+      transform: scale(1);
+    }
+  }
+
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+    }
+
+    to {
+      opacity: 1;
+    }
+  }
+
+  @keyframes slide-in {
+    from {
+      opacity: 0;
+      transform: translateY(4rem);
+    }
+
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+</style>

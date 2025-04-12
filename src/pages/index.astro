@@ -1,0 +1,45 @@
+---
+import Countdown from "@/components/Countdown.vue"
+import Layout from "@/layouts/Layout.astro"
+import { endDateTime, startDateTime } from "@/util/dates"
+import DoorButton from "@/components/DoorButton.vue"
+
+const now = Date.now()
+const hasEnded = endDateTime.getTime() < now
+const hasStarted = !hasEnded && startDateTime.getTime() <= now
+---
+
+<Layout>
+  <div class="container">
+    {hasEnded && <p>La RastaLAN est terminée</p>}
+    {hasStarted && <p>La RastaLAN a débuté&nbsp;!</p>}
+    {
+      !hasStarted && !hasEnded && (
+        <p>
+          La RastaLAN débute dans
+          <Countdown date={startDateTime} client:load />
+        </p>
+      )
+    }
+    <a class="button" href="/inscription">Je m'inscris</a>
+    {hasStarted && <DoorButton client:load>Ouvrir la porte</DoorButton>}
+
+    <a href="/participants">Liste des participants</a>
+  </div>
+</Layout>
+
+<style>
+  .container {
+    max-width: 300px;
+    margin: auto;
+
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+  }
+
+  .countdown {
+    font-size: 3rem;
+  }
+</style>
