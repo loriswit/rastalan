@@ -1,12 +1,12 @@
 ---
 import Countdown from "@/components/Countdown.vue"
 import Layout from "@/layouts/Layout.astro"
-import { endDateTime, startDateTime } from "@/util/dates"
+import { currentEvent } from "@/util/event"
 import DoorButton from "@/components/DoorButton.vue"
 
 const now = Date.now()
-const hasEnded = endDateTime.getTime() < now
-const hasStarted = !hasEnded && startDateTime.getTime() <= now
+const hasEnded = currentEvent.endDateTime.getTime() < now
+const hasStarted = !hasEnded && currentEvent.startDateTime.getTime() <= now
 ---
 
 <Layout>
@@ -17,7 +17,7 @@ const hasStarted = !hasEnded && startDateTime.getTime() <= now
       !hasStarted && !hasEnded && (
         <p>
           La RastaLAN débute dans
-          <Countdown date={startDateTime} client:load />
+          <Countdown date={currentEvent.startDateTime} client:load />
         </p>
       )
     }

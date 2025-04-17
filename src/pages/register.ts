@@ -1,7 +1,7 @@
 import type { APIRoute } from "astro"
 import { z, ZodError } from "zod"
-import { days } from "@/util/dates.ts"
-import { currentEvent, sql } from "@/util/db.ts"
+import { currentEvent } from "@/util/event.ts"
+import { sql } from "@/util/db.ts"
 import { NeonDbError } from "@neondatabase/serverless"
 
 const registrationSchema = z.object({
@@ -16,7 +16,7 @@ const registrationSchema = z.object({
   days: z
     .boolean()
     .array()
-    .length(days.length)
+    .length(currentEvent.days.length)
     .refine(days => days.includes(true), "Must contain at least one 'true' value"),
   conditionsRead: z.boolean(),
   conditionsAccepted: z.boolean(),

@@ -1,7 +1,6 @@
 ---
 import "@/assets/styles/global.css"
-import { endDate, startDate } from "@/util/dates"
-import { currentEvent } from "@/util/db"
+import { currentEvent } from "@/util/event"
 
 const { title } = Astro.props
 
@@ -9,12 +8,12 @@ const host = Astro.request.headers.get("host")
 const previousPage = Astro.request.headers.get("referer")
 const enableAnimations = !previousPage || new URL(previousPage).host !== host
 
-const startDateStr = startDate.toLocaleDateString("fr-CH", {
+const startDateStr = currentEvent.startDate.toLocaleDateString("fr-CH", {
   day: "numeric",
-  month: startDate.getMonth() !== endDate.getMonth() ? "long" : undefined,
-  year: startDate.getFullYear() !== endDate.getFullYear() ? "numeric" : undefined,
+  month: currentEvent.startDate.getMonth() !== currentEvent.endDate.getMonth() ? "long" : undefined,
+  year: currentEvent.startDate.getFullYear() !== currentEvent.endDate.getFullYear() ? "numeric" : undefined,
 })
-const endDateStr = endDate.toLocaleDateString("fr-CH", {
+const endDateStr = currentEvent.endDate.toLocaleDateString("fr-CH", {
   day: "numeric",
   month: "long",
   year: "numeric",

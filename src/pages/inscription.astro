@@ -1,12 +1,11 @@
 ---
 import Layout from "@/layouts/Layout.astro"
 import RegistrationForm from "@/components/RegistrationForm.vue"
-import { days } from "@/util/dates"
-import { currentEvent } from "@/util/db"
+import { currentEvent } from "@/util/event"
 ---
 
 <Layout title="Inscription">
-  <RegistrationForm client:only="vue" days={days} eventNumber={currentEvent.number} />
+  <RegistrationForm client:only="vue" days={currentEvent.days} eventNumber={currentEvent.number} />
 </Layout>
 
 <style></style>

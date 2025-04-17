@@ -1,10 +1,10 @@
 import { createHmac } from "node:crypto"
 import type { APIRoute } from "astro"
-import { endDateTime, startDateTime } from "@/util/dates.ts"
+import { currentEvent } from "@/util/event.ts"
 
 export const POST: APIRoute = async () => {
   const now = Date.now()
-  if (now <= startDateTime.getTime() || now >= endDateTime.getTime())
+  if (now <= currentEvent.startDateTime.getTime() || now >= currentEvent.endDateTime.getTime())
     return new Response("La porte ne peut pas être ouverte avant ou après la LAN", { status: 403 })
 
   const token = process.env.DOOR_TOKEN

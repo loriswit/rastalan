@@ -1,7 +1,7 @@
 ---
 import Layout from "@/layouts/Layout.astro"
-import { currentEvent, sql } from "@/util/db.ts"
-import { days } from "@/util/dates"
+import { sql } from "@/util/db.ts"
+import { currentEvent } from "@/util/event"
 import type { Registration } from "@/util/types"
 
 const registrations = (await sql`select *
@@ -16,11 +16,15 @@ const total = registrations.reduce(
       all: x.all + (current.days[index] ? 1 : 0),
       desktop: x.desktop + (current.hardware.pc && current.days[index] ? 1 : 0),
     })),
-  Array<{ all: number; desktop: number }>(days.length).fill({ all: 0, desktop: 0 }),
+  Array<{ all: number; desktop: number }>(currentEvent.days.length).fill({ all: 0, desktop: 0 }),
 )
 
 const max = Math.max(...total.map(t => t.all))
 const params = Astro.url.searchParams
+
+function formatDate(date: Date) {
+  return date.toLocaleString("fr-CH", { timeZone: currentEvent.timezone })
+}
 ---
 
 <Layout title="Joueurs inscrits">
@@ -40,7 +44,7 @@ const params = Astro.url.searchParams
           <table>
             <tr>
               <td colspan="2" />
-              {days.map(day => (
+              {currentEvent.days.map(day => (
                 <th>
                   {day.toLocaleDateString("fr-CH", {
                     day: "numeric",
@@ -64,7 +68,7 @@ const params = Astro.url.searchParams
             )}
             {registrations.map(registration => (
               <tr>
-                <th title={"Inscrit le " + registration.date.toLocaleString("fr-CH")}>{registration.name}</th>
+                <th title={"Inscrit le " + formatDate(registration.date)}>{registration.name}</th>
                 <td>
                   {registration.hardware.pc && "🖥️"}
                   {registration.hardware.laptop && "💻"}
