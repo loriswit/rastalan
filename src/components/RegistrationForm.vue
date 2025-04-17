@@ -44,6 +44,7 @@ const daysValid = computed(() => fields.everyday || (fields.notEveryDay && field
 const formValid = computed(() => nameValid.value && hardwareValid.value && daysValid.value)
 
 async function register() {
+  if (!formValid.value) return
   loading.value = true
 
   const payload = {

@@ -1,10 +1,32 @@
 import type { APIRoute } from "astro"
+import { z, ZodError } from "zod"
+import { days } from "@/util/dates.ts"
 import { currentEvent, sql } from "@/util/db.ts"
+import { NeonDbError } from "@neondatabase/serverless"
+
+const registrationSchema = z.object({
+  name: z.string().min(1),
+  hardware: z
+    .object({
+      pc: z.boolean(),
+      laptop: z.boolean(),
+      console: z.boolean(),
+    })
+    .refine(hw => Object.values(hw).includes(true), "Must contain at least one 'true' value"),
+  days: z
+    .boolean()
+    .array()
+    .length(days.length)
+    .refine(days => days.includes(true), "Must contain at least one 'true' value"),
+  conditionsRead: z.boolean(),
+  conditionsAccepted: z.boolean(),
+})
 
 export const PUT: APIRoute = async ({ request }) => {
-  const { name, hardware, days, conditionsRead, conditionsAccepted } = await request.json()
-
   try {
+    const payload = await request.json()
+    const { name, hardware, days, conditionsRead, conditionsAccepted } = registrationSchema.parse(payload)
+
     const registration = (await sql`select exists(select 1 from registration where name = ${name})`)[0]
     if (registration.exists) {
       await sql`update registration
@@ -20,8 +42,15 @@ export const PUT: APIRoute = async ({ request }) => {
                         ${conditionsRead}, ${conditionsAccepted}, ${currentEvent.id})`
       return new Response(null, { status: 201 })
     }
-  } catch (err: any) {
-    console.warn(err)
-    return new Response(err.message, { status: 400 })
+  } catch (error) {
+    if (error instanceof SyntaxError) return new Response("Body must be valid JSON", { status: 400 })
+    else if (error instanceof ZodError)
+      return new Response(
+        "Payload validation failed:\n" +
+          error.issues.map(issue => `- ${issue.path.join(".")}: ${issue.message}`).join("\n"),
+        { status: 422 },
+      )
+    else if (error instanceof NeonDbError) return new Response(error.message, { status: 400 })
+    else return new Response(error as any, { status: 500 })
   }
 }
