@@ -16,10 +16,10 @@ const total = registrations.reduce(
       all: x.all + (current.days[index] ? 1 : 0),
       desktop: x.desktop + (current.hardware.pc && current.days[index] ? 1 : 0),
     })),
-  Array(days.length).fill({ all: 0, desktop: 0 }) as { all: 0; desktop: 0 }[],
+  Array<{ all: number; desktop: number }>(days.length).fill({ all: 0, desktop: 0 }),
 )
 
-const max = Math.max(...total)
+const max = Math.max(...total.map(t => t.all))
 const params = Astro.url.searchParams
 ---
 
