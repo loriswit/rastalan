@@ -1,0 +1,53 @@
+---
+import Layout from "@/layouts/Layout.astro"
+import { getClients } from "@/util/lan.ts"
+
+if (!process.env.LAN_MODE) return new Response(null, { status: 404 })
+
+const clients = getClients()
+---
+
+<Layout>
+  <div class="container">
+    <h1>{clients.wired.length} joueurs connectés</h1>
+
+    <div class="clients">
+      {
+        clients.wired.map(client => (
+          <div class="client">
+            <span>{client.name}</span>
+            <span>
+              <code>{client.ip}</code>
+            </span>
+          </div>
+        ))
+      }
+    </div>
+
+    <a href="/">Retour</a>
+  </div>
+</Layout>
+
+<style scoped>
+  .container {
+    text-align: center;
+    max-width: fit-content;
+    margin: auto;
+  }
+
+  h1 {
+    font-size: 1.5em;
+    margin-top: 0;
+  }
+
+  .clients {
+    margin: 1em 0;
+  }
+
+  .client {
+    display: flex;
+    justify-content: space-between;
+    gap: 2em;
+    padding: 0.3em 0;
+  }
+</style>

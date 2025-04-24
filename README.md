@@ -4,12 +4,15 @@ Le formulaire d'inscription pour la [RastaLAN](https://rastalan.ch) !
 
 ## Variables d'environnements
 
-| Nom            | Description                           |
-| -------------- | ------------------------------------- |
-| `DATABASE_URL` | Database connection string (Postgres) |
-| `DOOR_DEVICE`  | SwitchBot Bot device ID               |
-| `DOOR_TOKEN`   | SwitchBot API token                   |
-| `DOOR_SECRET`  | SwitchBot API secret                  |
+| Nom               | Description                                |
+| ----------------- | ------------------------------------------ |
+| `DATABASE_URL`    | Database connection string (Postgres)      |
+| `DOOR_DEVICE`     | SwitchBot Bot device ID                    |
+| `DOOR_TOKEN`      | SwitchBot API token                        |
+| `DOOR_SECRET`     | SwitchBot API secret                       |
+| `LAN_MODE`        | Set to true if running in the LAN          |
+| `LAN_CLIENTS_CMD` | Shell command that lists connected clients |
+| `LAN_SERVICES`    | List of available services in the LAN      |
 
 ## Base de données
 

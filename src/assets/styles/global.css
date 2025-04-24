@@ -3,6 +3,11 @@
   src: url("@/assets/fonts/tw-cen-mt.ttf");
 }
 
+@font-face {
+  font-family: Consolas;
+  src: url("@/assets/fonts/consolas.ttf");
+}
+
 * {
   box-sizing: border-box;
   font-family: TwCenMT, sans-serif;
@@ -20,6 +25,20 @@ a {
 a.button {
   color: white;
   text-decoration: none;
+}
+
+code {
+  color: lightgreen;
+  font-family: Consolas, monospace;
+  font-size: 0.8em;
+  letter-spacing: -0.04em;
+  background-color: #fff3;
+  padding: 0.1em 0.3em;
+  border-radius: 0.3em;
+}
+
+a code:hover {
+  background-color: #fff5;
 }
 
 button:focus-visible,

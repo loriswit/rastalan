@@ -1,36 +1,92 @@
 ---
 import Countdown from "@/components/Countdown.vue"
 import Layout from "@/layouts/Layout.astro"
-import { currentEvent } from "@/util/event"
+import { currentEvent } from "@/util/event.ts"
 import DoorButton from "@/components/DoorButton.vue"
+import { services, getClients } from "@/util/lan.ts"
 
 const now = Date.now()
 const hasEnded = currentEvent.endDateTime.getTime() < now
 const hasStarted = !hasEnded && currentEvent.startDateTime.getTime() <= now
+
+const clients = getClients()
+const currentClient = clients.all.find(
+  ({ ip }) => ip === (Astro.request.headers.get("x-real-ip") ?? Astro.clientAddress),
+)
 ---
 
 <Layout>
   <div class="container">
-    {hasEnded && <p>La RastaLAN est terminée</p>}
-    {hasStarted && <p>La RastaLAN a débuté&nbsp;!</p>}
     {
       !hasStarted && !hasEnded && (
         <p>
           La RastaLAN débute dans
+          <br />
           <Countdown date={currentEvent.startDateTime} client:load />
         </p>
       )
     }
-    <a class="button" href="/inscription">Je m'inscris</a>
-    {hasStarted && <DoorButton client:load>Ouvrir la porte</DoorButton>}
+    {hasStarted && !process.env.LAN_MODE && <p>La RastaLAN a débuté&nbsp;!</p>}
+    {hasEnded && <p>La RastaLAN est terminée</p>}
 
+    {
+      hasStarted && !!process.env.LAN_MODE && (
+        <div class="local-info">
+          <p>Bienvenue à la RastaLAN&nbsp;!</p>
+          {currentClient !== undefined && (
+            <>
+              <div class="item">
+                <span>Nom d'hôte</span>
+                <span>
+                  <code>{currentClient.name}</code>
+                </span>
+              </div>
+              <div class="item">
+                <span>Adresse IP</span>
+                <span>
+                  <code>{currentClient.ip}</code>
+                </span>
+              </div>
+              <div class="item">
+                <span>Connexion</span>
+                <span>
+                  {currentClient.iface === "cable" ? <code>Ethernet</code> : <code>Wi-Fi ({currentClient.iface})</code>}
+                </span>
+              </div>
+              <div class="spacer" />
+            </>
+          )}
+
+          {services.map(service => (
+            <div class="item">
+              <span>{service.name}</span>
+              <span>
+                {service.web ? (
+                  <a href={service.web} target={service.web.startsWith("https://") ? "_blank" : undefined}>
+                    <code>{service.uri}</code>
+                  </a>
+                ) : (
+                  <code>{service.uri}</code>
+                )}
+              </span>
+            </div>
+          ))}
+
+          <a class="online" href="/joueurs">
+            🖥️ {clients.wired.length} joueurs connectés
+          </a>
+        </div>
+      )
+    }
+
+    {hasStarted && <DoorButton client:load>Ouvrir la porte</DoorButton>}
+    <a class="button" href="/inscription">Je m'inscris</a>
     <a href="/participants">Liste des participants</a>
   </div>
 </Layout>
 
 <style>
   .container {
-    max-width: 300px;
     margin: auto;
 
     text-align: center;
@@ -41,5 +97,46 @@ const hasStarted = !hasEnded && currentEvent.startDateTime.getTime() <= now
 
   .countdown {
     font-size: 3rem;
+  }
+
+  button,
+  .button {
+    max-width: 300px;
+    margin: auto;
+  }
+
+  .local-info p {
+    margin-top: 0;
+  }
+
+  .local-info .online {
+    display: inline-block;
+    text-decoration: none;
+    font-size: 0.8em;
+    margin-top: 1em;
+  }
+
+  .local-info .item {
+    max-width: 360px;
+    margin: auto;
+    text-align: left;
+    font-size: 0.8em;
+    display: flex;
+    justify-content: space-between;
+    padding: 0.1em 0;
+  }
+
+  .local-info .spacer {
+    padding: 0.5em 0;
+  }
+
+  @media (max-width: 400px) {
+    .local-info .item {
+      font-size: 0.75em;
+    }
+  }
+
+  code {
+    display: inline-block;
   }
 </style>

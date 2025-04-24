@@ -37,3 +37,18 @@ export interface FormFields {
   registered: Date
   eventNumber: number
 }
+
+export interface Client {
+  online: boolean
+  name: string
+  ip: string
+  mac: string
+  type: number
+  iface: string
+}
+
+export interface LanService {
+  name: string
+  uri: string
+  web?: string
+}

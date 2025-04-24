@@ -1,9 +1,8 @@
 import { defineConfig } from "astro/config"
 import { fileURLToPath, URL } from "node:url"
-
 import vue from "@astrojs/vue"
-
 import vercel from "@astrojs/vercel"
+import node from "@astrojs/node"
 
 export default defineConfig({
   output: "server",
@@ -17,5 +16,5 @@ export default defineConfig({
   },
 
   integrations: [vue()],
-  adapter: vercel(),
+  adapter: process.env.LAN_MODE ? node({ mode: "standalone" }) : vercel(),
 })
