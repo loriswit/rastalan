@@ -1,4 +1,5 @@
 ---
+import WiredClients from "@/components/WiredClients.vue"
 import Layout from "@/layouts/Layout.astro"
 import { getClients } from "@/util/lan.ts"
 
@@ -11,18 +12,7 @@ const clients = getClients()
   <div class="container">
     <h1>{clients.wired.length} joueurs connectés</h1>
 
-    <div class="clients">
-      {
-        clients.wired.map(client => (
-          <div class="client">
-            <span>{client.name}</span>
-            <span>
-              <code>{client.ip}</code>
-            </span>
-          </div>
-        ))
-      }
-    </div>
+    <WiredClients clients={clients} client:only="vue" />
 
     <a href="/">Retour</a>
   </div>
@@ -38,16 +28,5 @@ const clients = getClients()
   h1 {
     font-size: 1.5em;
     margin-top: 0;
-  }
-
-  .clients {
-    margin: 1em 0;
-  }
-
-  .client {
-    display: flex;
-    justify-content: space-between;
-    gap: 2em;
-    padding: 0.3em 0;
   }
 </style>

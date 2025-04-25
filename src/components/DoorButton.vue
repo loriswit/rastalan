@@ -7,7 +7,7 @@ let success = ref(false)
 
 async function openDoor() {
   loading.value = true
-  const res = await fetch("/door", { method: "POST" })
+  const res = await fetch("/api/door", { method: "POST" })
   loading.value = false
   if (res.status >= 400) alert("Erreur : " + (await res.text()))
   else {

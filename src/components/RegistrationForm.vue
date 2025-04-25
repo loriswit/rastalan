@@ -55,7 +55,7 @@ async function register() {
     conditionsAccepted: fields.conditionsAccepted,
   }
 
-  const res = await fetch("/register", {
+  const res = await fetch("/api/register", {
     method: "PUT",
     body: JSON.stringify(payload),
     headers: { "Content-Type": "application/json" },
