@@ -10,8 +10,6 @@ const clients = getClients()
 
 <Layout>
   <div class="container">
-    <h1>{clients.wired.length} joueurs connectés</h1>
-
     <WiredClients clients={clients} client:only="vue" />
 
     <a href="/">Retour</a>

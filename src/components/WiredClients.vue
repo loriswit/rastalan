@@ -15,6 +15,8 @@ setInterval(updateClients, 10000)
 </script>
 
 <template>
+  <h1>{{ wiredClients.length }} joueurs connectés</h1>
+
   <div class="clients" v-if="clients">
     <div class="client" v-for="client of wiredClients">
       <span>{{ client.name }}</span>
