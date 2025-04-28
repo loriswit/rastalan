@@ -45,6 +45,7 @@ export interface Client {
   mac: string
   type: number
   iface: string
+  realName?: string
 }
 
 export interface LanService {

@@ -19,10 +19,13 @@ setInterval(updateClients, 10000)
 
   <div class="clients" v-if="clients">
     <div class="client" v-for="client of wiredClients">
-      <span>{{ client.name }}</span>
-      <span>
+      <div>
+        <span>{{ client.name }}</span>
+        <span class="real-name" v-if="client.realName"> ({{ client.realName }})</span>
+      </div>
+      <div>
         <code>{{ client.ip }}</code>
-      </span>
+      </div>
     </div>
   </div>
 </template>
@@ -37,5 +40,10 @@ setInterval(updateClients, 10000)
   justify-content: space-between;
   gap: 2em;
   padding: 0.3em 0;
+
+  .real-name {
+    font-weight: normal;
+    opacity: 50%;
+  }
 }
 </style>
