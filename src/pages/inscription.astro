@@ -1,7 +1,12 @@
 ---
 import Layout from "@/layouts/Layout.astro"
 import RegistrationForm from "@/components/RegistrationForm.vue"
-import { currentEvent } from "@/util/event"
+import { currentEvent } from "@/util/event.ts"
+
+// if the event is over
+if (currentEvent.endDateTime.getTime() < Date.now()) {
+  return Astro.redirect("/")
+}
 ---
 
 <Layout title="Inscription">

@@ -23,6 +23,10 @@ const registrationSchema = z.object({
 })
 
 export const PUT: APIRoute = async ({ request }) => {
+  if (currentEvent.endDateTime.getTime() < Date.now()) {
+    return new Response("The event is over", { status: 400 })
+  }
+
   try {
     const payload = await request.json()
     const { name, hardware, days, conditionsRead, conditionsAccepted } = registrationSchema.parse(payload)

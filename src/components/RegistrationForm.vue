@@ -64,8 +64,10 @@ async function register() {
   if (res.status >= 400) {
     loading.value = false
     alert("Erreur : " + (await res.text()))
-  } else fields.registered = new Date()
-  location.href = `/participants?registration=${res.status === 201 ? "new" : "updated"}`
+  } else {
+    fields.registered = new Date()
+    location.href = `/participants?registration=${res.status === 201 ? "new" : "updated"}`
+  }
 }
 </script>
 

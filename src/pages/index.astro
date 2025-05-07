@@ -27,7 +27,14 @@ const currentClient = clients.all.find(
       )
     }
     {hasStarted && !process.env.LAN_MODE && <p>La RastaLAN a débuté&nbsp;!</p>}
-    {hasEnded && <p>La RastaLAN est terminée</p>}
+    {
+      hasEnded && (
+        <>
+          <p>La RastaLAN est terminée.</p>
+          <p>À dans six mois pour la prochaine LAN&nbsp;!</p>
+        </>
+      )
+    }
 
     {
       hasStarted && !!process.env.LAN_MODE && (
@@ -80,7 +87,13 @@ const currentClient = clients.all.find(
     }
 
     {hasStarted && <DoorButton client:load>Ouvrir la porte</DoorButton>}
-    <a class="button" href="/inscription">Je m'inscris</a>
+    {
+      !hasEnded && (
+        <a class="button" href="/inscription">
+          Je m'inscris
+        </a>
+      )
+    }
     <a href="/participants">Liste des participants</a>
   </div>
 </Layout>
