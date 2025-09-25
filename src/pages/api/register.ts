@@ -31,7 +31,13 @@ export const PUT: APIRoute = async ({ request }) => {
     const payload = await request.json()
     const { name, hardware, days, conditionsRead, conditionsAccepted } = registrationSchema.parse(payload)
 
-    const registration = (await sql`select exists(select 1 from registration where name = ${name})`)[0]
+    const registration = (
+      await sql`select exists(select 1
+                              from registration
+                              where name = ${name}
+                                and event_id = ${currentEvent.id})`
+    )[0]
+
     if (registration.exists) {
       await sql`update registration
                 set hardware            = ${JSON.stringify(hardware)},

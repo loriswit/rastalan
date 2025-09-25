@@ -1,6 +1,6 @@
 ---
 import "@/assets/styles/global.css"
-import { currentEvent } from "@/util/event"
+import { currentEvent } from "@/util/event.ts"
 
 const { title } = Astro.props
 
@@ -25,7 +25,7 @@ const endDateStr = currentEvent.endDate.toLocaleDateString("fr-CH", {
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.webp" />
     <meta name="generator" content={Astro.generator} />
     <title>{title && title + " - "}{currentEvent.name}</title>
   </head>
@@ -89,7 +89,7 @@ const endDateStr = currentEvent.endDate.toLocaleDateString("fr-CH", {
     font-style: italic;
     text-transform: uppercase;
     text-align: center;
-    text-shadow: 0 0 1em #fcd474b0;
+    text-shadow: 0 0 0.5em #fffa;
   }
 
   main {

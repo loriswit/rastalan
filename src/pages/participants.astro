@@ -1,8 +1,8 @@
 ---
 import Layout from "@/layouts/Layout.astro"
 import { sql } from "@/util/db.ts"
-import { currentEvent } from "@/util/event"
-import type { Registration } from "@/util/types"
+import { currentEvent } from "@/util/event.ts"
+import type { Registration } from "@/util/types.ts"
 
 const registrations = (await sql`select *
                                  from registration
@@ -88,7 +88,7 @@ function formatDate(date: Date) {
         </>
       )
     }
-    <a href="/">Retour</a>
+    <a class="button small" href="/">Retour</a>
   </div>
 </Layout>
 
@@ -131,7 +131,7 @@ function formatDate(date: Date) {
 
   td.yes,
   td.count {
-    background-color: rgba(100, 149, 237, 0.52);
+    background-color: rgba(178, 100, 237, 0.52);
   }
 
   .desktop {

@@ -8,7 +8,12 @@ const { days, eventNumber } = defineProps<{
   eventNumber: number
 }>()
 
-const saved = JSON.parse(localStorage.getItem("form") ?? "{}") as FormFields
+let saved = JSON.parse(localStorage.getItem("form") ?? "{}") as Partial<FormFields>
+if (saved.eventNumber !== eventNumber) {
+  // clear stored registration on new event
+  localStorage.removeItem("form")
+  saved = {}
+}
 
 const fields = reactive<FormFields>({
   name: saved.name ?? "",

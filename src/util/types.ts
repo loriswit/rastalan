@@ -34,7 +34,7 @@ export interface FormFields {
   days: boolean[]
   conditionsRead: boolean
   conditionsAccepted: boolean
-  registered: Date
+  registered: Date | false
   eventNumber: number
 }
 

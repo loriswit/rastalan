@@ -14,11 +14,11 @@
 }
 
 a {
-  color: lightskyblue;
+  color: orange;
   text-decoration: underline;
 
   &:hover {
-    color: orange;
+    color: darkorange;
   }
 }
 
@@ -32,7 +32,7 @@ code {
   font-family: Consolas, monospace;
   font-size: 0.8em;
   letter-spacing: -0.04em;
-  background-color: #fff3;
+  background-color: #0004;
   padding: 0.1em 0.3em;
   border-radius: 0.3em;
 }
@@ -48,7 +48,9 @@ a.button:focus-visible {
 
 button,
 a.button {
-  background-color: #d164ad;
+  background: linear-gradient(-45deg, #9f6fe2e0, #d86fe2e0);
+  text-shadow: 0 0 0.5em #fffa;
+  box-shadow: 0 0 0.5em #fffa;
   text-transform: uppercase;
   display: flex;
   align-items: center;
@@ -62,8 +64,8 @@ button:not(:disabled) {
 
 button:hover:not(:disabled),
 a.button:hover:not(:disabled) {
-  filter: saturate(120%) brightness(120%);
-  box-shadow: 0 0 1em #fcd47490;
+  filter: saturate(115%) brightness(115%);
+  box-shadow: 0 0 1em #fffa;
 }
 
 button:disabled,
@@ -78,6 +80,13 @@ a.button {
   width: 100%;
   height: 50px;
   margin: 0;
+
+  &.small {
+    width: auto;
+    height: auto;
+    font-size: 0.8em;
+    display: inline-block;
+  }
 }
 
 input[type="checkbox"] {
@@ -90,7 +99,7 @@ button,
 a.button,
 textarea,
 .field {
-  box-shadow: 0 0 1em #fcd47440;
+  box-shadow: 0 0 1em #fffa;
   padding: 15px;
   border: none;
   transform: skew(-10deg);
@@ -101,7 +110,7 @@ textarea,
 input,
 textarea,
 .field {
-  background-color: #402f4b80;
+  background-color: #003e4d80;
 }
 
 .field {
@@ -115,16 +124,21 @@ textarea,
 
 .field:hover {
   cursor: pointer;
-  background-color: #402f4be0;
+  background-color: #0b626a80;
 }
 
 .field:has(input:checked) {
   cursor: pointer;
-  background-color: #64e2d980;
+  background-color: #27cad980;
+  outline: 2px solid #d86fe2;
 }
 
 input:focus-visible,
 textarea:focus-visible {
-  background-color: #402f4be0;
-  outline: 2px solid #59cbff;
+  background-color: #0b626a80;
+  outline: 2px solid #d86fe2;
+}
+
+input::placeholder {
+  color: #fff8;
 }

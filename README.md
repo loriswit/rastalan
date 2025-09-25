@@ -5,7 +5,7 @@ Le formulaire d'inscription pour la [RastaLAN](https://rastalan.ch) !
 ## Variables d'environnements
 
 | Nom                 | Description                                |
-|---------------------|--------------------------------------------|
+| ------------------- | ------------------------------------------ |
 | `DATABASE_URL`      | Database connection string (Postgres)      |
 | `DOOR_DEVICE`       | SwitchBot Bot device ID                    |
 | `DOOR_TOKEN`        | SwitchBot API token                        |
@@ -32,13 +32,14 @@ create table event
 create table registration
 (
     id                  integer generated always as identity primary key,
-    name                text                                   not null unique,
+    name                text                                   not null,
     hardware            json                                   not null,
     days                json                                   not null,
     conditions_read     boolean                  default false not null,
     conditions_accepted boolean                  default false not null,
     date                timestamp with time zone default now() not null,
     registered          boolean                  default true  not null,
-    event_id            integer                                not null references event
+    event_id            integer                                not null references event,
+    unique (name, event_id)
 );
 ```
