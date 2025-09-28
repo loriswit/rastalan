@@ -14,6 +14,11 @@ Le formulaire d'inscription pour la [RastaLAN](https://rastalan.ch) !
 | `LAN_CLIENTS_CMD`   | Shell command that lists connected clients |
 | `LAN_CLIENTS_NAMES` | Assign custom names to MAC addresses       |
 | `LAN_SERVICES`      | List of available services in the LAN      |
+| `EMAIL_SERVER`      | Email server                               |
+| `EMAIL_USER`        | Email username                             |
+| `EMAIL_PASS`        | Email password                             |
+| `EMAIL_SENDER`      | Email sender address                       |
+| `EMAIL_RECIPIENT`   | Email recipient address                    |
 
 ## Base de données
 
