@@ -6,6 +6,18 @@ export interface Event {
   end_date: Date
 }
 
+export interface ExtendedEvent {
+  id: number
+  name: string
+  number: number
+  startDateTime: Date
+  startDate: Date
+  endDateTime: Date
+  endDate: Date
+  days: Date[]
+  timezone: string
+}
+
 export interface Registration {
   id: number
   name: string

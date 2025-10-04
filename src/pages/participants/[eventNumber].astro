@@ -1,0 +1,20 @@
+---
+import Layout from "@/layouts/Layout.astro"
+import RegistrationsTable from "@/components/RegistrationsTable.astro"
+import { loadEvent } from "@/util/event.ts"
+
+const eventNumber = parseInt(Astro.params.eventNumber ?? "")
+
+if (isNaN(eventNumber)) {
+  return new Response(null, { status: 404 })
+}
+
+const targetEvent = await loadEvent(eventNumber)
+if (!targetEvent) {
+  return new Response(null, { status: 404 })
+}
+---
+
+<Layout title={`Joueurs inscrits - ${targetEvent.name}`}>
+  <RegistrationsTable event={targetEvent} />
+</Layout>

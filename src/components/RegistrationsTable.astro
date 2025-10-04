@@ -1,0 +1,167 @@
+---
+import { sql } from "@/util/db.ts"
+import { currentEvent } from "@/util/event.ts"
+import type { ExtendedEvent } from "@/util/types.ts"
+import type { Registration } from "@/util/types.ts"
+
+interface Props {
+  event?: ExtendedEvent
+}
+
+// if event isn't specified, fetch registrations from current event
+const { event = currentEvent } = Astro.props
+const registrations = (await sql`select *
+                                 from registration
+                                 where registered
+                                   and event_id = ${event.id}
+                                 order by date desc`) as Registration[]
+
+const total = registrations.reduce(
+  (acc, current) =>
+    acc.map((x, index) => ({
+      all: x.all + (current.days[index] ? 1 : 0),
+      desktop: x.desktop + (current.hardware.pc && current.days[index] ? 1 : 0),
+    })),
+  Array<{ all: number; desktop: number }>(event.days.length).fill({ all: 0, desktop: 0 }),
+)
+
+const max = Math.max(...total.map(t => t.all))
+const params = Astro.url.searchParams
+
+function formatDate(date: Date) {
+  return date.toLocaleString("fr-CH", { timeZone: event.timezone })
+}
+---
+
+<div class="container">
+  {
+    params.has("registration") && (
+      <div class="confirmation">
+        {params.get("registration") === "new" && <p>Tu es inscrit(e) à la LAN&nbsp;!</p>}
+        {params.get("registration") === "updated" && <p>Ton inscription a été mise à jour</p>}
+      </div>
+    )
+  }
+  {
+    registrations.length > 0 ? (
+      <>
+        {event !== currentEvent ? <h2>Joueurs inscrits à la {event.name}</h2> : <h2>Joueurs inscrits</h2>}
+        <table>
+          <tr>
+            <td colspan="2" />
+            {event.days.map(day => (
+              <th>
+                {day.toLocaleDateString("fr-CH", {
+                  day: "numeric",
+                  month: "short",
+                })}
+              </th>
+            ))}
+          </tr>
+          {registrations.length > 1 && (
+            <>
+              <tr>
+                <th colspan="2">👥</th>
+                {total.map(count => (
+                  <td style={{ opacity: count.all / max }} class="count">
+                    {count.all} <span class="desktop">({count.desktop})</span>
+                  </td>
+                ))}
+              </tr>
+              <tr class="spacer" />
+            </>
+          )}
+          {registrations.map(registration => (
+            <tr>
+              <th title={"Inscrit le " + formatDate(registration.date)}>{registration.name}</th>
+              <td>
+                {registration.hardware.pc && "🖥️"}
+                {registration.hardware.laptop && "💻"}
+                {registration.hardware.console && "🎮"}
+              </td>
+              {registration.days.map(day => (
+                <td class={day ? "yes" : null}>{day && "✔️"}</td>
+              ))}
+            </tr>
+          ))}
+        </table>
+      </>
+    ) : (
+      <>
+        <h2>Aucun joueur inscrit</h2>
+        <p>Pour l'instant&hellip;</p>
+      </>
+    )
+  }
+  <a class="button small" href="/">Retour</a>
+</div>
+
+<style>
+  .container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+  }
+
+  h2 {
+    margin: 0;
+    text-transform: uppercase;
+    font-style: italic;
+  }
+
+  table {
+    display: block;
+    border-collapse: collapse;
+    margin: auto;
+    padding-bottom: 1rem;
+    overflow-x: auto;
+    scrollbar-color: #fff8 transparent;
+    max-width: 100%;
+    font-size: min(0.9em, 4.2vw);
+  }
+
+  th,
+  td {
+    text-align: center;
+    vertical-align: middle;
+    padding: 0.5rem;
+    white-space: nowrap;
+  }
+
+  :is(th, td):not(:last-child, :first-child) {
+    border-right: 1px solid #fff5;
+  }
+
+  td.yes,
+  td.count {
+    background-color: rgba(178, 100, 237, 0.52);
+  }
+
+  .desktop {
+    opacity: 0.5;
+  }
+
+  .spacer {
+    height: 1.5rem;
+    border-top: 1px solid #fff5;
+    border-bottom: 1px solid #fff5;
+  }
+
+  .confirmation {
+    font-size: 1.2em;
+    animation: appear 1s cubic-bezier(0.59, 0.33, 0.16, 1.27);
+  }
+
+  @keyframes appear {
+    from {
+      opacity: 0;
+      transform: scale(0.2);
+    }
+
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+</style>
