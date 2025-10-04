@@ -31,6 +31,17 @@ const params = Astro.url.searchParams
 function formatDate(date: Date) {
   return date.toLocaleString("fr-CH", { timeZone: event.timezone })
 }
+
+const stats = {
+  registrationsCount: {
+    all: registrations.length,
+    desktop: registrations.filter(r => r.hardware.pc).length,
+  },
+  dailyAverage: {
+    all: (total.reduce((acc, { all }) => acc + all, 0) / event.days.length).toFixed(1),
+    desktop: (total.reduce((acc, { desktop }) => acc + desktop, 0) / event.days.length).toFixed(1),
+  },
+}
 ---
 
 <div class="container">
@@ -85,6 +96,15 @@ function formatDate(date: Date) {
             </tr>
           ))}
         </table>
+
+        <div class="stats">
+          <span>Joueurs inscrits</span>
+          <span>👥 {stats.registrationsCount.all}</span>
+          <span>🖥️ {stats.registrationsCount.desktop}</span>
+          <span>Moyenne par jour</span>
+          <span>👥 {stats.dailyAverage.all}</span>
+          <span>🖥️ {stats.dailyAverage.desktop}</span>
+        </div>
       </>
     ) : (
       <>
@@ -163,5 +183,14 @@ function formatDate(date: Date) {
       opacity: 1;
       transform: scale(1);
     }
+  }
+
+  .stats {
+    font-size: 0.9em;
+    display: grid;
+    grid-template-columns: auto auto auto;
+    gap: 0.5em 1em;
+    align-items: baseline;
+    margin: 1em 0;
   }
 </style>
