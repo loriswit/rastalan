@@ -19,7 +19,7 @@ setInterval(updateClients, 10000)
 
   <div class="clients" v-if="clients">
     <div class="client" v-for="client of wiredClients">
-      <div>
+      <div class="name">
         <span>{{ client.name }}</span>
         <span class="real-name" v-if="client.realName"> ({{ client.realName }})</span>
       </div>
@@ -41,9 +41,20 @@ setInterval(updateClients, 10000)
   gap: 2em;
   padding: 0.3em 0;
 
+  .name {
+    text-align: left;
+    white-space: nowrap;
+  }
+
   .real-name {
     font-weight: normal;
     opacity: 50%;
+  }
+}
+
+@media (max-width: 400px) {
+  .client {
+    gap: unset;
   }
 }
 </style>
