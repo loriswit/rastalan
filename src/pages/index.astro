@@ -22,7 +22,7 @@ const currentClient = clients.all.find(
         <p>
           La RastaLAN débute dans
           <br />
-          <Countdown date={currentEvent.startDateTime} client:load />
+          <Countdown date={currentEvent.startDateTime} client:only />
         </p>
       )
     }
@@ -109,7 +109,7 @@ const currentClient = clients.all.find(
   }
 
   .countdown {
-    font-size: 3rem;
+    font-size: 3.5rem;
   }
 
   button,
@@ -143,7 +143,17 @@ const currentClient = clients.all.find(
     padding: 0.5em 0;
   }
 
+  @media (max-width: 550px) {
+    .countdown {
+      font-size: 3rem;
+    }
+  }
+
   @media (max-width: 400px) {
+    .countdown {
+      font-size: 2.25rem;
+    }
+
     .local-info .item {
       font-size: 0.75em;
     }

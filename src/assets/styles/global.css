@@ -14,7 +14,7 @@
 }
 
 a {
-  color: orange;
+  color: indianred;
   text-decoration: underline;
 
   &:hover {
@@ -23,7 +23,7 @@ a {
 }
 
 a.button {
-  color: white;
+  color: inherit;
   text-decoration: none;
 }
 
@@ -48,9 +48,9 @@ a.button:focus-visible {
 
 button,
 a.button {
-  background: linear-gradient(-45deg, #9f6fe2e0, #d86fe2e0);
+  background: linear-gradient(-45deg, #4E0D0DE0, #B1052DE0);
   text-shadow: 0 0 0.5em #fffa;
-  box-shadow: 0 0 0.5em #fffa;
+  box-shadow: 0 0 0.5em #000a;
   text-transform: uppercase;
   display: flex;
   align-items: center;
@@ -65,7 +65,7 @@ button:not(:disabled) {
 button:hover:not(:disabled),
 a.button:hover:not(:disabled) {
   filter: saturate(115%) brightness(115%);
-  box-shadow: 0 0 1em #fffa;
+  box-shadow: 0 0 1em #000a;
 }
 
 button:disabled,
@@ -99,18 +99,18 @@ button,
 a.button,
 textarea,
 .field {
-  box-shadow: 0 0 1em #fffa;
+  box-shadow: 0 0 1em #000a;
   padding: 15px;
   border: none;
   transform: skew(-10deg);
   font-size: 0.9em;
-  color: white;
+  color: inherit;
 }
 
 input,
 textarea,
 .field {
-  background-color: #003e4d80;
+  background-color: #30000Aa0;
 }
 
 .field {
@@ -124,19 +124,19 @@ textarea,
 
 .field:hover {
   cursor: pointer;
-  background-color: #0b626a80;
+  background-color: #430410a0;
 }
 
 .field:has(input:checked) {
   cursor: pointer;
-  background-color: #27cad980;
-  outline: 2px solid #d86fe2;
+  background-color: #7C0C1D80;
+  outline: 2px solid #ca3248;
 }
 
 input:focus-visible,
 textarea:focus-visible {
-  background-color: #0b626a80;
-  outline: 2px solid #d86fe2;
+  background-color: #430410a0;
+  outline: 2px solid #ca3248;
 }
 
 input::placeholder {
