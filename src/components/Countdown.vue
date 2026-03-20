@@ -72,7 +72,7 @@ const countdown = computed(() => {
     transform: skew(-10deg);
     display: flex;
     flex-direction: column;
-    background-color: #4004;
+    background-color: #3008;
     border-radius: 0.2em;
     padding: 0.2em 0.4em;
 

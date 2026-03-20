@@ -80,7 +80,7 @@ const currentClient = clients.all.find(
           ))}
 
           <a class="online" href="/joueurs">
-            🖥️ {clients.wired.length} joueurs connectés
+            <span class="icon">🖥️</span> {clients.wired.length} joueurs connectés
           </a>
         </div>
       )
@@ -118,29 +118,54 @@ const currentClient = clients.all.find(
     margin: auto;
   }
 
-  .local-info p {
-    margin-top: 0;
-  }
-
-  .local-info .online {
-    display: inline-block;
-    text-decoration: none;
-    font-size: 0.8em;
-    margin-top: 1em;
-  }
-
-  .local-info .item {
-    max-width: 360px;
+  .local-info {
+    background-color: #3008;
+    width: 420px;
+    max-width: 100%;
     margin: auto;
-    text-align: left;
-    font-size: 0.8em;
+    padding: 0.5em 1em;
+    border-radius: 0.5em;
     display: flex;
-    justify-content: space-between;
-    padding: 0.1em 0;
-  }
+    flex-direction: column;
+    gap: 0.2em;
 
-  .local-info .spacer {
-    padding: 0.5em 0;
+    p {
+      margin-top: 0;
+    }
+
+    .online {
+      align-self: center;
+      display: flex;
+      gap: 0.5em;
+      text-decoration: none;
+      font-size: 0.8em;
+      margin-top: 1em;
+      background-color: #200b;
+      padding: 0.3em 0.6em;
+      border-radius: 2em;
+
+      &:hover {
+        background-color: #200f;
+      }
+
+      .icon {
+        font-size: 0.8em;
+      }
+    }
+
+    .item {
+      text-align: left;
+      font-size: 0.8em;
+      display: flex;
+      gap: 0.5em;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.1em 0;
+    }
+
+    .spacer {
+      padding: 0.5em 0;
+    }
   }
 
   @media (max-width: 550px) {

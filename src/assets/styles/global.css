@@ -32,7 +32,7 @@ code {
   font-family: Consolas, monospace;
   font-size: 0.8em;
   letter-spacing: -0.04em;
-  background-color: #0004;
+  background-color: #0006;
   padding: 0.1em 0.3em;
   border-radius: 0.3em;
 }
@@ -48,7 +48,7 @@ a.button:focus-visible {
 
 button,
 a.button {
-  background: linear-gradient(-45deg, #4E0D0DE0, #B1052DE0);
+  background: linear-gradient(-45deg, #4e0d0de0, #b1052de0);
   text-shadow: 0 0 0.5em #fffa;
   box-shadow: 0 0 0.5em #000a;
   text-transform: uppercase;
@@ -110,7 +110,7 @@ textarea,
 input,
 textarea,
 .field {
-  background-color: #30000Aa0;
+  background-color: #30000aa0;
 }
 
 .field {
@@ -129,7 +129,7 @@ textarea,
 
 .field:has(input:checked) {
   cursor: pointer;
-  background-color: #7C0C1D80;
+  background-color: #7c0c1d80;
   outline: 2px solid #ca3248;
 }
 

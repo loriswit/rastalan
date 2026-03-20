@@ -27,7 +27,7 @@ async function openDoor() {
 
 <style scoped>
 button.success {
-  background-color: lightseagreen;
+  background: seagreen;
   pointer-events: none;
 }
 </style>
