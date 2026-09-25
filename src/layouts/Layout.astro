@@ -30,6 +30,7 @@ const endDateStr = currentEvent.endDate.toLocaleDateString("fr-CH", {
     <title>{title && title + " - "}{currentEvent.name}</title>
   </head>
   <body class={enableAnimations ? "animated" : undefined}>
+    <div class="bg-overlay"></div>
     <header>
       <h1><span class="title">{currentEvent.name}</span></h1>
       <p class="date">{startDateStr} &ndash; {endDateStr}</p>
@@ -50,12 +51,19 @@ const endDateStr = currentEvent.endDate.toLocaleDateString("fr-CH", {
   }
 
   body {
-    background-image: url("@/assets/images/background.webp");
+    background-image: url("@/assets/images/background.jpg");
     background-attachment: fixed;
     background-size: cover;
     background-position: center;
 
-    color: #ffdeaf;
+    color: #defff5;
+  }
+
+  .bg-overlay {
+    position: fixed;
+    inset: 0;
+    background-color: #0008;
+    z-index: -1;
   }
 
   h1 {
@@ -89,7 +97,7 @@ const endDateStr = currentEvent.endDate.toLocaleDateString("fr-CH", {
     font-style: italic;
     text-transform: uppercase;
     text-align: center;
-    text-shadow: 0 0 0.5em #000a;
+    text-shadow: 0 0 0.5em #fff8;
   }
 
   main {
