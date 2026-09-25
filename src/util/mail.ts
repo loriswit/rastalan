@@ -28,3 +28,12 @@ export async function sendMail(subject: string, text: string): Promise<void> {
     text,
   })
 }
+
+export async function trySendMail(subject: string, text: string): Promise<void> {
+  try {
+    await sendMail(subject, text)
+  } catch (error) {
+    console.error(`Failed to send email to ${process.env.EMAIL_RECIPIENT}`)
+    console.error(`Reason: ${error}`)
+  }
+}

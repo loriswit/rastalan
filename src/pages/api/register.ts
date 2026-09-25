@@ -3,7 +3,7 @@ import { NeonDbError } from "@neondatabase/serverless"
 import { z, ZodError } from "zod"
 import { currentEvent } from "@/util/event.ts"
 import { sql } from "@/util/db.ts"
-import { isMailingAvailable, sendMail } from "@/util/mail.ts"
+import { isMailingAvailable, trySendMail } from "@/util/mail.ts"
 
 const registrationSchema = z.object({
   name: z.string().min(1),
@@ -69,7 +69,7 @@ export const PUT: APIRoute = async ({ request }) => {
 
       const conditionsStr = conditionsAccepted ? "oui" : "non"
 
-      await sendMail(
+      trySendMail(
         `${name} ${registration.exists ? "a modifié son inscription" : "s'est inscrit"} à la RastaLAN !`,
         `Nom : ${name}\nMatériel : ${hardwareStr}\nJours : ${daysStr}\nConditions acceptées : ${conditionsStr}`,
       )
