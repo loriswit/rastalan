@@ -14,11 +14,11 @@
 }
 
 a {
-  color: indianred;
+  color: rgb(92, 205, 173);
   text-decoration: underline;
 
   &:hover {
-    color: darkorange;
+    color: rgb(0, 255, 255);
   }
 }
 
@@ -48,7 +48,7 @@ a.button:focus-visible {
 
 button,
 a.button {
-  background: linear-gradient(-45deg, #4e0d0de0, #b1052de0);
+  background: linear-gradient(-45deg, #106549, #51b092);
   text-shadow: 0 0 0.5em #fffa;
   box-shadow: 0 0 0.5em #000a;
   text-transform: uppercase;
@@ -110,7 +110,7 @@ textarea,
 input,
 textarea,
 .field {
-  background-color: #30000aa0;
+  background-color: #003024d0;
 }
 
 .field {
@@ -124,19 +124,19 @@ textarea,
 
 .field:hover {
   cursor: pointer;
-  background-color: #430410a0;
+  background-color: #04432cd0;
 }
 
 .field:has(input:checked) {
   cursor: pointer;
-  background-color: #7c0c1d80;
-  outline: 2px solid #ca3248;
+  background-color: #0c7c62d0;
+  outline: 2px solid #32ca9a;
 }
 
 input:focus-visible,
 textarea:focus-visible {
-  background-color: #430410a0;
-  outline: 2px solid #ca3248;
+  background-color: #04432ad0;
+  outline: 2px solid #32ca9a;
 }
 
 input::placeholder {
