@@ -1,6 +1,7 @@
 import type { APIRoute } from "astro"
 import { NeonDbError } from "@neondatabase/serverless"
 import { z, ZodError } from "zod"
+import { waitUntil } from "@vercel/functions"
 import { currentEvent } from "@/util/event.ts"
 import { sql } from "@/util/db.ts"
 import { isMailingAvailable, trySendMail } from "@/util/mail.ts"
@@ -69,9 +70,11 @@ export const PUT: APIRoute = async ({ request }) => {
 
       const conditionsStr = conditionsAccepted ? "oui" : "non"
 
-      trySendMail(
-        `${name} ${registration.exists ? "a modifié son inscription" : "s'est inscrit"} à la RastaLAN !`,
-        `Nom : ${name}\nMatériel : ${hardwareStr}\nJours : ${daysStr}\nConditions acceptées : ${conditionsStr}`,
+      waitUntil(
+        trySendMail(
+          `${name} ${registration.exists ? "a modifié son inscription" : "s'est inscrit"} à la RastaLAN !`,
+          `Nom : ${name}\nMatériel : ${hardwareStr}\nJours : ${daysStr}\nConditions acceptées : ${conditionsStr}`,
+        ),
       )
     }
 
