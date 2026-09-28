@@ -32,8 +32,12 @@ const endDateStr = currentEvent.endDate.toLocaleDateString("fr-CH", {
   <body class={enableAnimations ? "animated" : undefined}>
     <div class="bg-overlay"></div>
     <header>
-      <h1><span class="title">{currentEvent.name}</span></h1>
-      <p class="date">{startDateStr} &ndash; {endDateStr}</p>
+      <h1>
+        <span class="title">{currentEvent.name}</span>
+      </h1>
+      <p class="date">
+        {startDateStr} &ndash; {endDateStr}
+      </p>
     </header>
     <main>
       <slot />
