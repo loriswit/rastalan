@@ -18,10 +18,14 @@ export default defineConfig({
   integrations: [vue()],
   adapter: process.env.LAN_MODE ? node({ mode: "standalone" }) : vercel(),
 
-  security: !!process.env.ORIGIN ? {
-    allowedDomains: [{
-      hostname: process.env.ORIGIN,
-      protocol: "https",
-    }],
-  } : undefined,
+  security: !!process.env.ORIGIN
+    ? {
+        allowedDomains: [
+          {
+            hostname: process.env.ORIGIN,
+            protocol: "https",
+          },
+        ],
+      }
+    : undefined,
 })

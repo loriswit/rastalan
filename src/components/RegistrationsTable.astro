@@ -45,75 +45,73 @@ const stats = {
 ---
 
 <div class="container">
-  {
-    params.has("registration") && (
-      <div class="confirmation">
-        {params.get("registration") === "new" && <p>Tu es inscrit(e) à la LAN&nbsp;!</p>}
-        {params.get("registration") === "updated" && <p>Ton inscription a été mise à jour</p>}
-      </div>
-    )
-  }
-  {
-    registrations.length > 0 ? (
-      <>
-        {event !== currentEvent ? <h2>Joueurs inscrits à la {event.name}</h2> : <h2>Joueurs inscrits</h2>}
-        <table>
-          <tr>
-            <td colspan="2" />
-            {event.days.map(day => (
-              <th>
-                {day.toLocaleDateString("fr-CH", {
-                  day: "numeric",
-                  month: "short",
-                })}
-              </th>
-            ))}
-          </tr>
-          {registrations.length > 1 && (
-            <>
-              <tr>
-                <th colspan="2">👥</th>
-                {total.map(count => (
-                  <td style={{ opacity: count.all / max }} class="count">
-                    {count.all} <span class="desktop">({count.desktop})</span>
-                  </td>
-                ))}
-              </tr>
-              <tr class="spacer" />
-            </>
-          )}
-          {registrations.map(registration => (
+  {params.has("registration") && (
+    <div class="confirmation">
+      {params.get("registration") === "new" && <p>Tu es inscrit(e) à la LAN&nbsp;!</p>}
+      {params.get("registration") === "updated" && <p>Ton inscription a été mise à jour</p>}
+    </div>
+  )}
+  {registrations.length > 0 ? (
+    <>
+      {event !== currentEvent ? <h2>Joueurs inscrits à la {event.name}</h2> : <h2>Joueurs inscrits</h2>}
+      <table>
+        <tr>
+          <td colspan="2" />
+          {event.days.map(day => (
+            <th>
+              {day.toLocaleDateString("fr-CH", {
+                day: "numeric",
+                month: "short",
+              })}
+            </th>
+          ))}
+        </tr>
+        {registrations.length > 1 && (
+          <>
             <tr>
-              <th title={"Inscrit le " + formatDate(registration.date)}>{registration.name}</th>
-              <td>
-                {registration.hardware.pc && "🖥️"}
-                {registration.hardware.laptop && "💻"}
-                {registration.hardware.console && "🎮"}
-              </td>
-              {registration.days.map(day => (
-                <td class={day ? "yes" : null}>{day && "✔️"}</td>
+              <th colspan="2">👥</th>
+              {total.map(count => (
+                <td style={{ opacity: count.all / max }} class="count">
+                  {count.all} <span class="desktop">({count.desktop})</span>
+                </td>
               ))}
             </tr>
-          ))}
-        </table>
+            <tr class="spacer" />
+          </>
+        )}
+        {registrations.map(registration => (
+          <tr>
+            <th title={"Inscrit le " + formatDate(registration.date)}>{registration.name}</th>
+            <td>
+              {registration.hardware.pc && "🖥️"}
+              {registration.hardware.laptop && "💻"}
+              {registration.hardware.console && "🎮"}
+            </td>
+            {registration.days.map(day => (
+              <td class={day ? "yes" : null}>{day && "✔️"}</td>
+            ))}
+          </tr>
+        ))}
+      </table>
 
-        <div class="stats">
-          <span>Joueurs inscrits</span>
-          <span>👥 {stats.registrationsCount.all}</span>
-          <span>🖥️ {stats.registrationsCount.desktop}</span>
-          <span>Moyenne par jour</span>
-          <span>👥 {stats.dailyAverage.all}</span>
-          <span>🖥️ {stats.dailyAverage.desktop}</span>
-        </div>
-      </>
-    ) : (
-      <>
-        <h2>Aucun joueur inscrit</h2>
-        <p>Pour l'instant&hellip;</p>
-      </>
-    )
-  }
-  <a class="button small" href="/">Retour</a>
+      <div class="stats">
+        <span>Joueurs inscrits</span>
+        <span>👥 {stats.registrationsCount.all}</span>
+        <span>🖥️ {stats.registrationsCount.desktop}</span>
+        <span>Moyenne par jour</span>
+        <span>👥 {stats.dailyAverage.all}</span>
+        <span>🖥️ {stats.dailyAverage.desktop}</span>
+      </div>
+    </>
+  ) : (
+    <>
+      <h2>Aucun joueur inscrit</h2>
+      <p>Pour l'instant&hellip;</p>
+    </>
+  )}
+  <a class="button small" href="/">
+    Retour
+  </a>
 </div>
 
 <style>
