@@ -33,7 +33,7 @@ setInterval(updateClients, 10000)
 <style scoped>
 .clients {
   margin: 1em 0;
-  background-color: rgba(0, 51, 37, 0.6);
+  background-color: #0428;
   padding: 0.5em 1em;
   border-radius: 0.5em;
 }
